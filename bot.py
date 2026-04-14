@@ -1,21 +1,21 @@
 import discord
 from discord.ext import commands
 from discord.ui import Button, View
+# --- PHẦN THÊM MỚI ĐỂ CHẠY FREE 24/7 TRÊN RENDER ---
 from flask import Flask
 import threading
 import os
 
-# --- CHIÊU NGỤY TRANG CHẠY FREE 24/7 ---
 app = Flask(__name__)
 @app.route('/')
 def home():
-    return "SHADOW CARTEL BOT IS ONLINE"
+    return "SHADOW CARTEL BOT IS ALIVE"
 
 def run_web():
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
+# ------------------------------------------------
 
-# --- CONFIG CỦA ĐẠI CA ---
 TOKEN = 'MTQ5MzU5MjA1NTI3OTI1NTYxMg.GGjw7l.K3wv3UZrLQbZ4IgURJe40o143_xQWZ7QFCzXJ0'
 LINK_MOI = 'https://discord.gg/w6eyJRfa'
 
@@ -28,19 +28,21 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.online, activity=activity)
     print(f'--- [SYSTEM_BYPASS] ---')
     print(f'Bot {bot.user.name} da vao tran!')
+    print(f'San sang phuc vu Dai ca tai: {LINK_MOI}')
 
 @bot.command()
 async def diemdanh(ctx):
-    # KHÔI PHỤC BẢNG EMBED
+    # TAO BANG EMBED CHAT CHO DAI CA
     embed = discord.Embed(
         title="⊱ ⚔️ SHADOW CARTEL - CHIẾM ĐÓNG ⚔️ ⊰",
-        description="**Chiếm Đóng Tổng**",
-        color=0x2f3136
+        description="**Chiế Đóng Tổng**",
+        color=0x2f3136 # Mau den xam sang trong
     )
+    
     embed.add_field(name="📌 Cách Vào:", value="🔥 Bật hoạt động game **GTA5VN**.", inline=False)
     embed.add_field(name="📍 TRẠNG THÁI:", value="🟢 Đang Hoạt Động", inline=False)
     
-    # KHÔI PHỤC NÚT BẤM "VÀO ROOM"
+    # TAO NUT BAM "VAO ROOM"
     view = View()
     button = Button(
         label="VÀO ROOM CHIẾM ĐÓNG", 
@@ -52,8 +54,9 @@ async def diemdanh(ctx):
     
     await ctx.send(embed=embed, view=view)
 
+# --- CHỈNH SỬA PHẦN CHẠY ĐỂ KÍCH HOẠT CẢ HAI ---
 if __name__ == "__main__":
-    # Kích hoạt ngụy trang để Render không thu phí
+    # Chạy web ngụy trang để Render không thu phí
     threading.Thread(target=run_web).start()
     # Chạy bot chính của Đại ca
     bot.run(TOKEN)
